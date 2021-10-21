@@ -1,38 +1,115 @@
+html {
+  background: #2C3E50;
+}
+
 .App {
   text-align: center;
+  background: #2C3E50;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.title {
+  color: white;
+  font-size: 4rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.diff-highlight {
+  background-color: lightblue;
+  font-weight: bold;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.data-out {
+  width: 80%;
+  margin: auto;
+  color: black;
+  background: #566573;
+  box-shadow: 6px 6px 3px 1px rgba(0, 0, 0, 0.5);
+  table-layout: fixed;
+}
+
+.data-out tr td {
+  word-wrap: break-word;
+}
+
+.th-sticky {
+  height: 50px;
+  position: sticky;
+  top: 0;
+  background: #566573;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+tr:nth-child(odd) {
+  background: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+tr:nth-child(even) {
+  background: #ABB2B9;
+}
+
+.push-GAS {
+  background:rgba(0, 0, 0, 0);
+  border-style: none;
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.loading {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px;
+}
+
+.dot-flashing {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #9880ff;
+  color: #9880ff;
+  animation: dotFlashing 1s infinite linear alternate;
+  animation-delay: .5s;
+}
+
+.dot-flashing::before, .dot-flashing::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.dot-flashing::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #9880ff;
+  color: #9880ff;
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+
+.dot-flashing::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #9880ff;
+  color: #9880ff;
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+
+@keyframes dotFlashing {
+  0% {
+    background-color: #9880ff;
   }
-  to {
-    transform: rotate(360deg);
+  50%,
+  100% {
+    background-color: #ebe6ff;
   }
 }
