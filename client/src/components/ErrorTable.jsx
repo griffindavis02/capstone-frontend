@@ -1,6 +1,11 @@
+import PushTest from './PushTest.jsx'
+
 const ErrorTable = props => {
+
     return (
+      <div className="bg-app pt-5">
         <table className="data-out">
+          <tbody>
           <tr className="headers">
             <th className="th-sticky" data-column="Rate" data-order="desc">Error Rate</th>
             <th className="th-sticky" data-column="IterationNum" data-order="desc">Iteration</th>
@@ -12,7 +17,6 @@ const ErrorTable = props => {
             <th className="th-sticky" data-column="DeltaValue" data-order="desc">Delta Value</th>
             <th className="th-sticky" data-column="When" data-order="desc">When</th>
           </tr>
-
           {!props.loading ? props.data.map(iteration => (
               <tr>
                 <td>{iteration.Rate}</td>
@@ -26,7 +30,18 @@ const ErrorTable = props => {
                 <td>{iteration.ErrorData.When}</td>
               </tr>
           )) : null}
+          </tbody>
           </table>
+          {
+            props.loading ? <div className="loading">
+            <div className="dot-flashing"></div>
+            </div>
+              : <div>
+                  <PushTest user=""/>
+                  {/*Export to excel */}
+                </div>
+          }
+        </div>
     )
 }
 
