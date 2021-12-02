@@ -13,8 +13,8 @@ const NavBar = () => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav.Link target="_blank" href="https://github.com/griffindavis02/eth-bit-flip">GitHub</Nav.Link>
-                        <Nav.Link href="/About">About</Nav.Link>
+                        <Nav.Link className="text.dark" target="_blank" href="https://github.com/griffindavis02/eth-bit-flip">GitHub</Nav.Link>
+                        {/* <Nav.Link href="/About">About</Nav.Link> */}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

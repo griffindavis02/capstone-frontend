@@ -69,7 +69,9 @@ const CreateExcel = (props) => {
 
     return (
         <div>
-            <ExcelFile filename={props.selectedTest.test_name} element={<button className="btn btn-success">Export to Excel</button>}>
+            <ExcelFile filename={props.selectedTest.test_name} element={
+                <button className="btn btn-success">Export to Excel</button>
+            }>
                 <ExcelSheet dataSet={excelIterations} name={props.selectedTest.test_name} />
             </ExcelFile>
         </div>

@@ -28,7 +28,7 @@ const PushTest = (props) => {
 
     return (
         <div>
-            <button type="button" className="btn btn-danger" onClick={() => setModalIsOpen(true)}>Delete Test</button>
+            <button type="button" className="btn btn-danger mx-1" onClick={() => setModalIsOpen(true)}>Delete Test</button>
             <Modal show={modalIsOpen} size="lg"
             onHide={() => setModalIsOpen(false)}
             aria-labelledby="contained-modal-title-vcenter"

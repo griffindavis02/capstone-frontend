@@ -12,12 +12,13 @@
         "mongodb": "^4.2.1",
         "react": "^17.0.2",
         "react-bootstrap": "^2.0.3",
-        "react-data-export": "^0.6.0",
+        "react-data-export": "^0.4.2",
         "react-dom": "^17.0.2",
         "react-modal": "^3.14.4",
         "react-router-dom": "^6.0.2",
-        "react-scripts": "4.0.3",
+        "react-scripts": "^3.4.4",
         "web-vitals": "^1.1.2",
+        "webpack": "^4.42.0",
         "xlsx": "^0.17.4"
     },
     "scripts": {

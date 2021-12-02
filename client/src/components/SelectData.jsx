@@ -7,7 +7,7 @@ const SelectData = props => {
     }
 
     return (
-        <div className="pt-5">
+        <div className="container mt-1">
             <FloatingLabel controlId="floatingSelect" label="Previous Tests">
                 <Form.Select onChange={changeHandler}>
                     <option value="" key="0">Current Test</option>
