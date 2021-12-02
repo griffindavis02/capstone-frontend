@@ -16,10 +16,6 @@ code {
         monospace;
 }
 
-.bg-app {
-    background: #2c3e50;
-}
-
 .App {
     text-align: center;
     background: #2c3e50;
@@ -57,11 +53,11 @@ code {
 }
 
 tr:nth-child(odd) {
-    background: white;
+    background: #abb2b9;
 }
 
 tr:nth-child(even) {
-    background: #abb2b9;
+    background: white;
 }
 
 .push-GAS {

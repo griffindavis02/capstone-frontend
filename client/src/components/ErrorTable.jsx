@@ -1,9 +1,11 @@
 import PushTest from './PushTest.jsx'
+import DeleteTest from './DeleteTest.jsx'
+import CreateExcel from './CreateExcel.jsx'
 
 const ErrorTable = props => {
 
     return (
-      <div className="bg-app pt-5">
+      <div>
         <table className="data-out">
           <tbody>
           <tr className="headers">
@@ -17,7 +19,7 @@ const ErrorTable = props => {
             <th className="th-sticky" data-column="DeltaValue" data-order="desc">Delta Value</th>
             <th className="th-sticky" data-column="When" data-order="desc">When</th>
           </tr>
-          {!props.loading ? props.data.map(iteration => (
+          {!props.loading ? props.selectedTest.data.map(iteration => (
               <tr>
                 <td>{iteration.Rate}</td>
                 <td>{iteration.IterationNum}</td>
@@ -33,13 +35,19 @@ const ErrorTable = props => {
           </tbody>
           </table>
           {
-            props.loading ? <div className="loading">
-            <div className="dot-flashing"></div>
+            props.loading ? 
+            <div className="loading">
+              <div className="dot-flashing"></div>
             </div>
-              : <div>
-                  <PushTest user=""/>
-                  {/*Export to excel */}
-                </div>
+              : props.selectedTest._id ==="" ?
+              <div>
+                <PushTest user="" handler={props.handler}/>
+              </div>
+              :
+              <div>
+                <DeleteTest selectedTest={props.selectedTest} handler={props.handler} />
+                <CreateExcel selectedTest={props.selectedTest} />
+              </div>
           }
         </div>
     )
@@ -56,7 +64,6 @@ const highlightDiff = (hex1, hex2) => {
         }
         i++
       }
-      console.log(indeces)
 
       return (
         <span>0x{indeces.map( index => (
@@ -67,44 +74,5 @@ const highlightDiff = (hex1, hex2) => {
         ))}</span>
       )
     }
-
-// class Errortable extends Component {
-
-//   render() {
-//     return (
-//         <table className="data-out">
-//           <tr className="headers">
-//             <th className="th-sticky" data-column="Rate" data-order="desc">Error Rate</th>
-//             <th className="th-sticky" data-column="IterationNum" data-order="desc">Iteration</th>
-//             <th className="th-sticky" data-column="PreviousValue" data-order="desc">Previous Value</th>
-//             <th className="th-sticky" data-column="PreviousByte" data-order="desc">Previous Byte</th>
-//             <th className="th-sticky" data-column="IntBit" data-order="desc">Bit Significance</th>
-//             <th className="th-sticky" data-column="ErrorValue" data-order="desc">Error Value</th>
-//             <th className="th-sticky" data-column="ErrorByte" data-order="desc">Error Byte</th>
-//             <th className="th-sticky" data-column="DeltaValue" data-order="desc">Delta Value</th>
-//             <th className="th-sticky" data-column="When" data-order="desc">When</th>
-//           </tr>
-
-//           {!props.loading ? props.data.map(rate => (
-//             <tbody>
-//             {rate.FlipData ? rate.FlipData.map(iter => (
-//               <tr>
-//                 <td>{rate.Rate}</td>
-//                 <td>{iter.IterationNum}</td>
-//                 <td>{iter.ErrorData.PreviousValue}</td>
-//                 <td>{highlightDiff(iter.ErrorData.PreviousByte, iter.ErrorData.ErrorByte)}</td>
-//                 <td>{iter.ErrorData.IntBits.map(bit => (`${bit}`)).join(', ')}</td>
-//                 <td>{iter.ErrorData.ErrorValue}</td>
-//                 <td>{highlightDiff(iter.ErrorData.ErrorByte, iter.ErrorData.PreviousByte)}</td>
-//                 <td>{iter.ErrorData.DeltaValue}</td>
-//                 <td>{iter.ErrorData.When}</td>
-//               </tr>
-//             )) : <tr><td>{rate.Rate}</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td></tr>}
-//             </tbody>
-//           )) : null}
-//           </table>
-//     );
-//   }
-// }
 
 export default ErrorTable;
