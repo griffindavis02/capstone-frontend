@@ -40,7 +40,7 @@ const CreateExcel = (props) => {
                     width: { wch: 15 },
                     style: columnStyle,
                 },
-                { title: 'When', width: { wch: 25 }, style: columnStyle },
+                { title: 'When', width: { wch: 30 }, style: columnStyle },
             ],
             data: [],
         },
@@ -48,13 +48,6 @@ const CreateExcel = (props) => {
 
     const grayStyle = { fill: { patternType: 'solid', fgColor: { rgb: 'ABB2B9' } } }
     const whiteStyle = { fill: { patternType: 'solid', fgColor: { rgb: 'FFFFFF' } } }
-
-    // for (column of excelIterations[0].columns) {
-    //     column.style = {
-    //         font: { sz: 14, bold: true },
-    //         fill: { patternType: 'solid', fgColor: { rgb: '4298e8' } },
-    //     }
-    // }
 
     for (const [i, iteration] of props.selectedTest.data.entries()) {
         const style = i%2 ? grayStyle : whiteStyle

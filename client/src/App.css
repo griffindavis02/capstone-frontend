@@ -21,6 +21,10 @@ code {
     background: #2c3e50;
 }
 
+.btn:focus {
+    box-shadow: none !important;
+}
+
 .title {
     color: white;
     font-size: 4rem;

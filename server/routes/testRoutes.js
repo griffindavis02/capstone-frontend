@@ -50,8 +50,6 @@ router.route('/api/delete/:id').delete((req, res) => {
 
     db_connect.collection('tests').deleteOne(query, (err, obj) => {
         if (err) throw err
-        res.status(obj)
-        res.send(`Document ${req.params.id} deleted.`)
     })
 })
 

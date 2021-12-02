@@ -1,8 +1,17 @@
+import React, {useState} from 'react'
+
+import useTable from './useTable'
+import TableFooter from './TableFooter.jsx'
+
 import PushTest from './PushTest.jsx'
 import DeleteTest from './DeleteTest.jsx'
 import CreateExcel from './CreateExcel.jsx'
 
 const ErrorTable = props => {
+
+  const rowsPerPage = 5
+  const [page, setPage] = useState(1)
+  const {slice, range} = useTable(props.selectedTest.data, page, rowsPerPage)
 
     return (
       <div>
@@ -19,8 +28,8 @@ const ErrorTable = props => {
             <th className="th-sticky" data-column="DeltaValue" data-order="desc">Delta Value</th>
             <th className="th-sticky" data-column="When" data-order="desc">When</th>
           </tr>
-          {!props.loading ? props.selectedTest.data.map(iteration => (
-              <tr>
+          {!props.loading ? slice.map((iteration, i) => (
+              <tr key={i}>
                 <td>{iteration.Rate}</td>
                 <td>{iteration.IterationNum}</td>
                 <td>{iteration.ErrorData.PreviousValue}</td>
@@ -34,6 +43,13 @@ const ErrorTable = props => {
           )) : null}
           </tbody>
           </table>
+
+            {!props.loading ?
+            <TableFooter range={range} slice={slice} setPage={setPage} page={page}/ >
+              :
+              null
+            }
+
           {
             props.loading ? 
             <div className="loading">
@@ -41,11 +57,11 @@ const ErrorTable = props => {
             </div>
               : props.selectedTest._id ==="" ?
               <div>
-                <PushTest user="" handler={props.handler}/>
+                <PushTest className="pt-5" user="" handler={props.handler}/>
               </div>
               :
               <div>
-                <DeleteTest selectedTest={props.selectedTest} handler={props.handler} />
+                <DeleteTest className="pt-5" selectedTest={props.selectedTest} handler={props.handler} />
                 <CreateExcel selectedTest={props.selectedTest} />
               </div>
           }
@@ -66,8 +82,8 @@ const highlightDiff = (hex1, hex2) => {
       }
 
       return (
-        <span>0x{indeces.map( index => (
-          <span>
+        <span>0x{indeces.map( (index, i) => (
+          <span key={i}>
             <span>{hex1.slice(index.prev,index.i)}</span>
             <span className="diff-highlight">{hex1.slice(index.i, index.i+1)}</span>
           </span>
