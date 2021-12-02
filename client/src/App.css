@@ -1,0 +1,130 @@
+html {
+    background: #2c3e50;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+.App {
+    text-align: center;
+    background: #2c3e50;
+}
+
+.title {
+    color: white;
+    font-size: 4rem;
+}
+
+.diff-highlight {
+    background-color: lightblue;
+    font-weight: bold;
+}
+
+.data-out {
+    width: 80%;
+    margin: auto;
+    color: black;
+    background: #566573;
+    box-shadow: 6px 6px 3px 1px rgba(0, 0, 0, 0.5);
+    table-layout: fixed;
+}
+
+.data-out tr td {
+    word-wrap: break-word;
+}
+
+.th-sticky {
+    height: 50px;
+    position: sticky;
+    top: 0;
+    background: #566573;
+    color: white;
+}
+
+tr:nth-child(odd) {
+    background: #abb2b9;
+}
+
+tr:nth-child(even) {
+    background: white;
+}
+
+.push-GAS {
+    background: rgba(0, 0, 0, 0);
+    border-style: none;
+    border: 2px solid white;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.loading {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px;
+}
+
+.dot-flashing {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dotFlashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+}
+
+.dot-flashing::before,
+.dot-flashing::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
+
+.dot-flashing::before {
+    left: -15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 0s;
+}
+
+.dot-flashing::after {
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 1s;
+}
+
+@keyframes dotFlashing {
+    0% {
+        background-color: #9880ff;
+    }
+    50%,
+    100% {
+        background-color: #ebe6ff;
+    }
+}
