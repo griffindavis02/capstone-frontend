@@ -68,7 +68,7 @@ class App extends Component {
 
   // fetching the GET route from the Express server which matches the GET route from server.js
   callBackendAPI = async () => {
-    const response = await fetch(`${process.env.API}/api/current-test`)
+    const response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/current-tests')//`${process.env.API}/api/current-test`)
     const body = await response.json()
 
     if (response.status !== 200) {
@@ -97,7 +97,7 @@ class App extends Component {
   }
 
   getTests = async () => {
-    const response = await fetch(`${process.env.API}/api/past-tests`)
+    const response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/past-tests')//`${process.env.API}/api/past-tests`)
     const body = await response.json()
 
     if (response.status !== 200 ) throw Error(body.message)
