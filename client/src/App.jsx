@@ -4,7 +4,7 @@ import './App.css';
 import NavBar from './components/NavBar'
 import ErrorTable from './components/ErrorTable.jsx'
 import SelectData from './components/SelectData.jsx'
-require('dotenv').config({ path: '../.env' })
+require('dotenv')
 
 class App extends Component {
   state = {
@@ -68,9 +68,13 @@ class App extends Component {
 
   // fetching the GET route from the Express server which matches the GET route from server.js
   callBackendAPI = async () => {
-    console.log(`${process.env.API}/api/current-test`)
-    console.log(process.env.API)
-    const response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/current-test')//`${process.env.API}/api/current-test`)
+    let response
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      response = await fetch('/api/current-test')
+    } else {
+      response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/current-test')
+    }
+    // const response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/current-test')//`${process.env.API}/api/current-test`)
     const body = await response.json()
 
     if (response.status !== 200) {
@@ -99,7 +103,13 @@ class App extends Component {
   }
 
   getTests = async () => {
-    const response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/past-tests')//`${process.env.API}/api/past-tests`)
+    let response
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      response = await fetch('/api/past-tests')
+    } else {
+      response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/past-tests')
+    }
+    // const response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/past-tests')//`${process.env.API}/api/past-tests`)
     const body = await response.json()
 
     if (response.status !== 200 ) throw Error(body.message)
