@@ -1,17 +1,17 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import useTable from './useTable'
-import TableFooter from './TableFooter.jsx'
+import TableFooter from './TableFooter'
 
-import PushTest from './PushTest.jsx'
-import DeleteTest from './DeleteTest.jsx'
-import CreateExcel from './CreateExcel.jsx'
+import PushTest from './PushTest'
+import DeleteTest from './DeleteTest'
+import CreateExcel from './CreateExcel'
 
 const ErrorTable = props => {
 
-  const rowsPerPage = 5
-  const [page, setPage] = useState(1)
-  const {slice, range} = useTable(props.selectedTest.data, page, rowsPerPage)
+    const rowsPerPage = 5
+    const [page, setPage] = useState(1)
+    const { slice, range } = useTable(props.selectedTest.data, page, rowsPerPage)
 
     return (
         <div className="container-lg mt-4">
@@ -84,32 +84,32 @@ const ErrorTable = props => {
                     </tr>
                     {!props.loading
                         ? slice.map((iteration, i) => (
-                              <tr key={i}>
-                                  <td>{iteration.Rate}</td>
-                                  <td>{iteration.IterationNum}</td>
-                                  <td>{iteration.ErrorData.PreviousValue}</td>
-                                  <td>
-                                      {highlightDiff(
-                                          iteration.ErrorData.PreviousByte,
-                                          iteration.ErrorData.ErrorByte
-                                      )}
-                                  </td>
-                                  <td>
-                                      {iteration.ErrorData.IntBits.map(
-                                          (bit) => `${bit}`
-                                      ).join(', ')}
-                                  </td>
-                                  <td>{iteration.ErrorData.ErrorValue}</td>
-                                  <td>
-                                      {highlightDiff(
-                                          iteration.ErrorData.ErrorByte,
-                                          iteration.ErrorData.PreviousByte
-                                      )}
-                                  </td>
-                                  <td>{iteration.ErrorData.DeltaValue}</td>
-                                  <td>{iteration.ErrorData.When}</td>
-                              </tr>
-                          ))
+                            <tr key={i}>
+                                <td>{iteration.Rate}</td>
+                                <td>{iteration.IterationNum}</td>
+                                <td>{iteration.ErrorData.PreviousValue}</td>
+                                <td>
+                                    {highlightDiff(
+                                        iteration.ErrorData.PreviousByte,
+                                        iteration.ErrorData.ErrorByte
+                                    )}
+                                </td>
+                                <td>
+                                    {iteration.ErrorData.IntBits.map(
+                                        (bit) => `${bit}`
+                                    ).join(', ')}
+                                </td>
+                                <td>{iteration.ErrorData.ErrorValue}</td>
+                                <td>
+                                    {highlightDiff(
+                                        iteration.ErrorData.ErrorByte,
+                                        iteration.ErrorData.PreviousByte
+                                    )}
+                                </td>
+                                <td>{iteration.ErrorData.DeltaValue}</td>
+                                <td>{iteration.ErrorData.When}</td>
+                            </tr>
+                        ))
                         : null}
                 </tbody>
             </table>
@@ -149,25 +149,25 @@ const ErrorTable = props => {
 }
 
 const highlightDiff = (hex1, hex2) => {
-      let i = 2
-      let indeces = []
-      let prev = i
-      while (i < hex1.length) {
+    let i = 2
+    let indeces = []
+    let prev = i
+    while (i < hex1.length) {
         if (hex1[i] !== hex2[i]) {
-          indeces.push({prev, i})
-          prev = i+1
+            indeces.push({ prev, i })
+            prev = i + 1
         }
         i++
-      }
-
-      return (
-        <span>0x{indeces.map( (index, i) => (
-          <span key={i}>
-            <span>{hex1.slice(index.prev,index.i)}</span>
-            <span className="diff-highlight">{hex1.slice(index.i, index.i+1)}</span>
-          </span>
-        ))}</span>
-      )
     }
+
+    return (
+        <span>0x{indeces.map((index, i) => (
+            <span key={i}>
+                <span>{hex1.slice(index.prev, index.i)}</span>
+                <span className="diff-highlight">{hex1.slice(index.i, index.i + 1)}</span>
+            </span>
+        ))}</span>
+    )
+}
 
 export default ErrorTable;
