@@ -41,6 +41,7 @@ const CreateExcel = (props) => {
                     style: columnStyle,
                 },
                 { title: 'When', width: { wch: 30 }, style: columnStyle },
+                { title: 'Message', width: { wch: 100 }, style: columnStyle },
             ],
             data: [],
         },
@@ -64,6 +65,7 @@ const CreateExcel = (props) => {
             { value: iteration.ErrorData.ErrorByte, style: style },
             { value: iteration.ErrorData.DeltaValue, style: style },
             { value: iteration.ErrorData.When, style: style },
+            { value: iteration.ErrorData.Msg, style: style },
         ])
     }
 

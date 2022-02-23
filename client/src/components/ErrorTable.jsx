@@ -81,6 +81,12 @@ const ErrorTable = props => {
                         >
                             When
                         </th>
+                        <th
+                            className="th-sticky"
+                            data-column="Message"
+                        >
+                            Message
+                        </th>
                     </tr>
                     {!props.loading
                         ? slice.map((iteration, i) => (
@@ -108,6 +114,7 @@ const ErrorTable = props => {
                                   </td>
                                   <td>{iteration.ErrorData.DeltaValue}</td>
                                   <td>{iteration.ErrorData.When}</td>
+                                  <td>{iteration.ErrorData.Msg}</td> 
                               </tr>
                           ))
                         : null}
