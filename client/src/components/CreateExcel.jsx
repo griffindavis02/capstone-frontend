@@ -6,7 +6,7 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet
 
 const CreateExcel = (props) => {
     const columnStyle = {
-        font: { sz: 14, bold: true },
+        font: { sz: 14, bold: true, color: { rgb: 'FFFFFF' } },
         fill: { patternType: 'solid', fgColor: { rgb: '566573' } },
     }
     let excelIterations = [
