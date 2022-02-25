@@ -3,7 +3,7 @@ const router = express.Router()
 const ObjectId = require('mongodb').ObjectId
 const dbo = require('../db/conn')
 const crypto = require('crypto')
-const { requiresAuth } = require('express-openid-connect')
+// const { requiresAuth } = require('express-openid-connect')
 let data = {
     Data: [],
 }
@@ -18,7 +18,7 @@ router.route('/').get((req, res) => {
     <ul>${hrefs}</ul>`)
 })
 
-router.route('/auth-test').get(requiresAuth(), async (req, res) => {
+router.route('/auth-test').get(async (req, res) => {
     let db_connect = dbo.getDb()
     const user = {
         user: req.oidc.user.nickname,
@@ -48,7 +48,7 @@ router.route('/api/iteration').post((req, res) => {
     res.status = 200
 })
 
-router.route('/api/commit').post(requiresAuth(), (req, res) => {
+router.route('/api/commit').post((req, res) => {
     let db_connect = dbo.getDb()
     const test = {
         test_name: req.body.test_name,
@@ -62,7 +62,7 @@ router.route('/api/commit').post(requiresAuth(), (req, res) => {
     res.json(test)
 })
 
-router.route('/api/past-tests').get(requiresAuth(), (req, res) => {
+router.route('/api/past-tests').get((req, res) => {
     let db_connect = dbo.getDb()
     db_connect
         .collection('tests')
@@ -73,11 +73,11 @@ router.route('/api/past-tests').get(requiresAuth(), (req, res) => {
         })
 })
 
-router.route('/api/current-test').get(requiresAuth(), (req, res) => {
+router.route('/api/current-test').get((req, res) => {
     res.json(data)
 })
 
-router.route('/api/delete/:id').delete(requiresAuth(), (req, res) => {
+router.route('/api/delete/:id').delete((req, res) => {
     let db_connect = dbo.getDb()
     let query = { _id: ObjectId(req.params.id) }
 
