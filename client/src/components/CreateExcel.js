@@ -41,6 +41,7 @@ const CreateExcel = (props) => {
                     style: columnStyle,
                 },
                 { title: 'When', width: { wch: 30 }, style: columnStyle },
+                { title: 'Message', width: { wch: 100 }, style: columnStyle },
             ],
             data: [],
         },
@@ -50,7 +51,7 @@ const CreateExcel = (props) => {
     const whiteStyle = { fill: { patternType: 'solid', fgColor: { rgb: 'FFFFFF' } } }
 
     for (const [i, iteration] of props.selectedTest.data.entries()) {
-        const style = i%2 ? grayStyle : whiteStyle
+        const style = i % 2 ? grayStyle : whiteStyle
         excelIterations[0].data.push([
             { value: iteration.Rate, style: style },
             { value: iteration.IterationNum, style: style },
@@ -64,6 +65,7 @@ const CreateExcel = (props) => {
             { value: iteration.ErrorData.ErrorByte, style: style },
             { value: iteration.ErrorData.DeltaValue, style: style },
             { value: iteration.ErrorData.When, style: style },
+            { value: iteration.ErrorData.Msg, style: style },
         ])
     }
 
