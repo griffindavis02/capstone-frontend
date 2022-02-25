@@ -5,7 +5,7 @@ import TableFooter from './TableFooter'
 
 import PushTest from './PushTest'
 import DeleteTest from './DeleteTest'
-import CreateExcel from './CreateExcel'
+// import CreateExcel from './CreateExcel'
 
 const ErrorTable = props => {
 
@@ -144,7 +144,7 @@ const ErrorTable = props => {
                 </div>
             ) : (
                 <div className="d-flex flex-row justify-content-center my-4">
-                    <CreateExcel selectedTest={props.selectedTest} />
+                    {/* <CreateExcel selectedTest={props.selectedTest} /> */}
                     <DeleteTest
                         selectedTest={props.selectedTest}
                         handler={props.handler}

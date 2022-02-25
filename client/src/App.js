@@ -52,11 +52,11 @@ class App extends Component {
     //   }, 5000)
     // })
 
-    // this.getTests()
-    // this.callBackendAPI()
-    //   .catch(err => console.log(err));
-    // const repeatFetch = setInterval(this.callBackendAPI, 5000)
-    // this.setState({ repeatFetch: repeatFetch })
+    this.getTests()
+    this.callBackendAPI()
+      .catch(err => console.log(err));
+    const repeatFetch = setInterval(this.callBackendAPI, 5000)
+    this.setState({ repeatFetch: repeatFetch })
   }
 
   componentWillUnmount() {
@@ -106,8 +106,8 @@ class App extends Component {
 
   // fetching the GET route from the Express server which matches the GET route from server.js
   callBackendAPI = async () => {
-    const { isAuthenticated } = this.props.auth0
-    if (!isAuthenticated) return
+    // const { isAuthenticated } = this.props.auth0
+    // if (!isAuthenticated) return
     const response = await fetch(`${this.state.api}/api/current-test`)
     // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     //   response = await fetch('/api/current-test')
@@ -143,8 +143,8 @@ class App extends Component {
   }
 
   getTests = async () => {
-    const { isAuthenticated } = this.props.auth0
-    if (!isAuthenticated) return
+    // const { isAuthenticated } = this.props.auth0
+    // if (!isAuthenticated) return
     const response = await fetch(`${this.state.api}/api/past-tests`)
     // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     //   response = await fetch('/api/past-tests')
