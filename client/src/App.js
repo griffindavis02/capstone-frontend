@@ -156,7 +156,7 @@ class App extends Component {
 
     if (response.status !== 200) throw Error(body.message)
 
-    body.Tests ? this.setState({ pastTests: body.Tests }) : this.setState({ pastTests: [] })
+    body? this.setState({ pastTests: body}) : this.setState({ pastTests: [] })
   }
 
   handlePushDelete = async () => {
