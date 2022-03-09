@@ -16,7 +16,6 @@ const CreateXLSX = async (name, data) => {
         },
     }
 
-    // TODO: will 'style:' work here? not sure.
     ws.columns = [
         { header: 'Error Rate', width: 15 },
         { header: 'Iteration', width: 10 },
@@ -108,6 +107,4 @@ const CreateCSV = async (name, data) => {
     return stream
 }
 
-const CreateMAT = (name, data) => {}
-
-module.exports = { CreateXLSX, CreateCSV, CreateMAT }
+module.exports = { CreateXLSX, CreateCSV }

@@ -3,7 +3,6 @@ const router = express.Router()
 const ObjectId = require('mongodb').ObjectId
 const dbo = require('../db/conn')
 const crypto = require('crypto')
-const { Readable } = require('stream')
 const fileExport = require('../utils/fileExport')
 // const { requiresAuth } = require('express-openid-connect')
 let data = {
@@ -133,10 +132,6 @@ router.route('/api/download').get(async (req, res) => {
                 `attachment; filename="${test.test_name}.xlsx"`
             )
             stream.pipe(res)
-            break
-        case 'mat':
-            fileExport.CreateMAT(test.test_name, test.data)
-            res.contentType = 'text/plain'
             break
         default:
             stream = await fileExport.CreateCSV(test.test_name, test.data)
