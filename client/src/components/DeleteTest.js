@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Modal, Form } from 'react-bootstrap'
 import axios from 'axios'
 
-const PushTest = (props) => {
+const DeleteTest = (props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [testName, setTestName] = useState("")
     const [allowDelete, setAllowDelete] = useState(false)
@@ -56,4 +56,33 @@ const PushTest = (props) => {
     )
 }
 
-export default PushTest
+const ClearTest = (props) => {
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+
+    // TODO: Add security key via token or something to 
+    // clear user tests
+    const onSubmit = e => {
+        axios.post(`${props.api}/api/clear`)
+        setModalIsOpen(false)
+    }
+
+    return (
+        <div>
+            <button type="button" className="btn btn-danger mx-1" onClick={() => setModalIsOpen(true)}>Clear Test</button>
+            <Modal show={modalIsOpen} size="lg"
+                onHide={() => setModalIsOpen(false)}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">Are you sure?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <button type="button" className="btn btn-secondary mx-1" onClick={() => setModalIsOpen(false)}>Cancel</button>
+                    <button type="button" className="btn btn-danger" onClick={onSubmit}>Clear Test</button>
+                </Modal.Body>
+            </Modal>
+        </div>
+    )
+}
+
+export { DeleteTest, ClearTest }

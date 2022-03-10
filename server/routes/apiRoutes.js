@@ -101,6 +101,12 @@ router.route('/api/delete/:id').delete((req, res) => {
     })
 })
 
+router.route('/api/clear').post((req, res) => {
+    data = {
+        Data: [],
+    }
+})
+
 router.route('/api/test:id').get((req, res) => {
     let db_connect = dbo.getDb()
     let query = { _id: ObjectId(req.params.id) }

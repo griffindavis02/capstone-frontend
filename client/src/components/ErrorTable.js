@@ -4,7 +4,7 @@ import useTable from './useTable'
 import TableFooter from './TableFooter'
 
 import PushTest from './PushTest'
-import DeleteTest from './DeleteTest'
+import { DeleteTest, ClearTest } from './DeleteTest'
 import { XLSXButton, CSVButton, JSONButton } from './ExportButtons'
 
 const ErrorTable = props => {
@@ -140,7 +140,9 @@ const ErrorTable = props => {
                         className="pt-5"
                         user=""
                         handler={props.handler}
+                        api={props.api}
                     />
+                    <ClearTest className="pt-5" api={props.api} />
                 </div>
             ) : (
                 <div className="d-flex flex-row justify-content-center my-4">

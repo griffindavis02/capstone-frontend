@@ -89,7 +89,6 @@ class App extends Component {
                   </div> :
                   <LoginButton />}
               />
-              {/* <Route exact path="/login" element={<Login />} /> */}
             </Routes>
           </Fragment>
         </Router>
@@ -97,17 +96,10 @@ class App extends Component {
     );
   }
 
-  // fetching the GET route from the Express server which matches the GET route from server.js
   callBackendAPI = async () => {
     // const { isAuthenticated } = this.props.auth0
     // if (!isAuthenticated) return
     const response = await fetch(`${this.state.api}/api/current-test`)
-    // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    //   response = await fetch('/api/current-test')
-    // } else {
-    //   response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/current-test')
-    // }
-    // const response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/current-test')//`${process.env.API}/api/current-test`)
     const body = await response.json()
 
     if (response.status !== 200) {
@@ -128,10 +120,6 @@ class App extends Component {
       this.setState({ loading: true })
     }
 
-    // body.Data.length ? this.setState({ currentData: body.Data, loading: false }) : this.setState({ loading: true })
-    // if(this.state.selectedTest === "") this.setState({ selectedData: this.state.currentData })
-    // this.state.selectedData.length ? this.setState({loading: false}) : this.setState({loading: true})
-
     return body
   }
 
@@ -139,12 +127,6 @@ class App extends Component {
     // const { isAuthenticated } = this.props.auth0
     // if (!isAuthenticated) return
     const response = await fetch(`${this.state.api}/api/past-tests`)
-    // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    //   response = await fetch('/api/past-tests')
-    // } else {
-    //   response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/past-tests')
-    // }
-    // const response = await fetch('https://brrg-mongo-conn.herokuapp.com/api/past-tests')//`${process.env.API}/api/past-tests`)
     const body = await response.json()
 
     if (response.status !== 200) throw Error(body.message)
@@ -163,7 +145,6 @@ class App extends Component {
         data: this.state.currentData
       }
     })
-    console.log(this.state.selectedTest._id)
   }
 
 }
