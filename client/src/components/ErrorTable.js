@@ -5,7 +5,7 @@ import TableFooter from './TableFooter'
 
 import PushTest from './PushTest'
 import DeleteTest from './DeleteTest'
-import { XLSXButton, CSVButton } from './ExportButtons'
+import { XLSXButton, CSVButton, JSONButton } from './ExportButtons'
 
 const ErrorTable = props => {
 
@@ -146,6 +146,7 @@ const ErrorTable = props => {
                 <div className="d-flex flex-row justify-content-center my-4">
                     <XLSXButton selectedTest={props.selectedTest} api={props.api} />
                     <CSVButton selectedTest={props.selectedTest} api={props.api} />
+                    <JSONButton selectedTest={props.selectedTest} api={props.api} />
                     <DeleteTest
                         selectedTest={props.selectedTest}
                         handler={props.handler}

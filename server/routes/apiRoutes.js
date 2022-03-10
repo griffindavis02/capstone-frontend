@@ -133,6 +133,18 @@ router.route('/api/download').get(async (req, res) => {
             )
             stream.pipe(res)
             break
+        case 'json':
+            stream = fileExport.CreateJSON(test.data)
+            res.setHeader(
+                'Content-Type',
+                'application/json'
+            )
+            res.setHeader(
+                'Content-Disposition',
+                `attachment; filename="${test.test_name}.json"`
+            )
+            stream.pipe(res)
+            break
         default:
             stream = await fileExport.CreateCSV(test.test_name, test.data)
             res.setHeader('Content-Type', 'text/csv')

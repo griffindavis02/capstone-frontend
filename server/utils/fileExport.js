@@ -107,4 +107,12 @@ const CreateCSV = async (name, data) => {
     return stream
 }
 
-module.exports = { CreateXLSX, CreateCSV }
+const CreateJSON = (data) => {
+    const stream = new Readable()
+    const buf = Buffer.from(JSON.stringify(data, null, 4))
+    stream.push(buf)
+    stream.push(null)
+    return stream
+}
+
+module.exports = { CreateXLSX, CreateCSV, CreateJSON }

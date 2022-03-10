@@ -12,4 +12,10 @@ const CSVButton = (props) => {
     )
 }
 
-export { XLSXButton, CSVButton }
+const JSONButton = (props) => {
+    return (
+        <a className="btn btn-info mx-1" href={`${props.api}/api/download?id=${props.selectedTest._id}&fileType=json`}>Export to JSON</a>
+    )
+}
+
+export { XLSXButton, CSVButton, JSONButton }
