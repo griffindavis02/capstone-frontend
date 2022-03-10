@@ -27,7 +27,7 @@ class App extends Component {
       this.setState({ api: 'http://localhost:5000' })
     } else {
       this.setState({
-        api: 'https://brrg-mongo-conn.herokuapp.com/api/current-test'
+        api: 'https://brrg-mongo-conn.herokuapp.com' // did have /api/current-test
       })
     }
 
@@ -92,7 +92,7 @@ class App extends Component {
                         })
                       }
                     } />
-                    <ErrorTable loading={this.state.loading} selectedTest={this.state.selectedTest} handler={this.handlePushDelete} />
+                    <ErrorTable api={this.state.api} loading={this.state.loading} selectedTest={this.state.selectedTest} handler={this.handlePushDelete} />
                   </div> :
                   <LoginButton />}
               />
@@ -156,7 +156,7 @@ class App extends Component {
 
     if (response.status !== 200) throw Error(body.message)
 
-    body? this.setState({ pastTests: body}) : this.setState({ pastTests: [] })
+    body ? this.setState({ pastTests: body }) : this.setState({ pastTests: [] })
   }
 
   handlePushDelete = async () => {
