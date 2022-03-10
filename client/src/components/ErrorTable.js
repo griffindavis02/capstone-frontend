@@ -150,6 +150,7 @@ const ErrorTable = props => {
                     <DeleteTest
                         selectedTest={props.selectedTest}
                         handler={props.handler}
+                        api={props.api}
                     />
                 </div>
             )}
