@@ -9,7 +9,8 @@ import { withAuth0 } from '@auth0/auth0-react'
 
 class App extends Component {
   state = {
-    api: '',
+    api: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ?
+      'http://localhost:5000' : 'https://brrg-mongo-conn.herokuapp.com',
     pastTests: [],
     selectedTest: {
       _id: "",
@@ -23,14 +24,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      this.setState({ api: 'http://localhost:5000' })
-    } else {
-      this.setState({
-        api: 'https://brrg-mongo-conn.herokuapp.com' // did have /api/current-test
-      })
-    }
-
     // this.setState({
     //   repeatFetch: setInterval(async () => {
     //     const { isAuthenticated, getAccessTokenSilently } = this.props.auth0
