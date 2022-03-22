@@ -66,6 +66,10 @@ class App extends Component {
               <Route exact path="/" element={
                 isAuthenticated ?
                   <div>
+                    {/* TODO: restructure pastTests to be mapped with id for O(1) query
+                    then sub for-loop for try-catch block where the catch gets
+                    the current data from the test cache because it won't have
+                    an id */}
                     <SelectData tests={this.state.pastTests} onChange={
                       pId => {
                         let selectedTest = { _id: "", test_name: "", user: "", data: [] }
@@ -79,7 +83,6 @@ class App extends Component {
                         }
                         this.setState({
                           selectedTest: selectedTest,
-                          selectedData: pId ? selectedTest.data : this.state.currentData,
                         })
                       }
                     } />
@@ -131,11 +134,12 @@ class App extends Component {
   handlePushDelete = async () => {
     await this.getTests()
     this.setState({
+      currentData: [],
       selectedTest: {
         _id: "",
         test_name: "",
         user: "",
-        data: this.state.currentData
+        data: []
       }
     })
   }
