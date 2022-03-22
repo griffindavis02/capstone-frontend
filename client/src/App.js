@@ -68,18 +68,18 @@ class App extends Component {
                   <div>
                     <SelectData tests={this.state.pastTests} onChange={
                       pId => {
-                        let selectTest = { _id: "", test_name: "", user: "", data: [] }
+                        let selectedTest = { _id: "", test_name: "", user: "", data: [] }
                         for (const test of this.state.pastTests) {
                           if (test._id === pId) {
-                            selectTest = test
+                            selectedTest = test
                           }
                         }
-                        if (!selectTest._id) {
-                          selectTest.data = this.state.currentData
+                        if (!selectedTest._id) {
+                          selectedTest.data = this.state.currentData
                         }
                         this.setState({
-                          selectedTest: selectTest,
-                          selectedData: pId ? selectTest.data : this.state.currentData,
+                          selectedTest: selectedTest,
+                          selectedData: pId ? selectedTest.data : this.state.currentData,
                         })
                       }
                     } />
