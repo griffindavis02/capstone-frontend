@@ -23,7 +23,7 @@ const TableFooter = (props) => {
     return (
         <div className="table-footer mt-2 d-flex justify-content-center">
             {props.page !== 1
-                ? <div className="pageLeft mt-1">
+                ? <div className="pageLeft mt-3">
                     <a href="#test-btns" className="link-light text-decoration-none mx-1" onClick={() => props.setPage(1)}>&lt;&lt;</a>
                     <a href="#test-btns" className="link-light text-decoration-none mx-1" onClick={() => props.setPage(props.page - 1)}>&lt;</a>
                 </div>
@@ -124,7 +124,7 @@ const TableFooter = (props) => {
                 </FloatingLabel>
             </div>
             {props.page !== props.range[props.range.length - 1] && props.range.length
-                ? <div className="pageRight mt-1">
+                ? <div className="pageRight mt-3">
                     <a href="#test-btns" className="link-light text-decoration-none mx-1" onClick={() => props.setPage(props.page + 1)}>&gt;</a>
                     <a href="#test-btns" className="link-light text-decoration-none mx-1" onClick={() => props.setPage(props.range[props.range.length - 1])}>&gt;&gt;</a>
                 </div>
