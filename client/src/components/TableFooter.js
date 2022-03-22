@@ -111,7 +111,7 @@ const TableFooter = (props) => {
                 </button>
                 : null
             }
-            <div style={{ width: '15%' }} fit-content className="mx-1 mt-1">
+            <div style={{ width: '15%' }} className="mx-1 mt-1">
                 <FloatingLabel
                     controlId="floatingRowsPerPage"
                     label="Rows Per Page"
