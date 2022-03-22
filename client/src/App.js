@@ -19,7 +19,6 @@ class App extends Component {
       data: []
     },
     currentData: [],
-    loading: true,
     repeatFetch: function () { }
   }
 
@@ -81,11 +80,10 @@ class App extends Component {
                         this.setState({
                           selectedTest: selectTest,
                           selectedData: pId ? selectTest.data : this.state.currentData,
-                          loading: selectTest.data.length ? false : true
                         })
                       }
                     } />
-                    <ErrorTable api={this.state.api} loading={this.state.loading} selectedTest={this.state.selectedTest} handler={this.handlePushDelete} />
+                    <ErrorTable api={this.state.api} loading={!this.state.selectedTest.data.length} selectedTest={this.state.selectedTest} handler={this.handlePushDelete} />
                   </div> :
                   <LoginButton />}
               />
@@ -113,11 +111,7 @@ class App extends Component {
         user: "",
         data: body.Data
       }
-      this.setState({ currentData: body.Data, selectedTest: test, loading: false })
-    } else if (this.state.selectedTest._id !== "" && this.state.selectedTest.data.length) {
-      this.setState({ loading: false })
-    } else {
-      this.setState({ loading: true })
+      this.setState({ currentData: body.Data, selectedTest: test })
     }
 
     return body
@@ -137,7 +131,6 @@ class App extends Component {
   handlePushDelete = async () => {
     await this.getTests()
     this.setState({
-      loading: true,
       selectedTest: {
         _id: "",
         test_name: "",
