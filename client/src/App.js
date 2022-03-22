@@ -132,6 +132,7 @@ class App extends Component {
   }
 
   handlePushDelete = async () => {
+    await new Promise(r => setTimeout(r, 1000)) // wait 3 seconds for db update
     await this.getTests()
     this.setState({
       currentData: [],
