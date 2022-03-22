@@ -9,7 +9,7 @@ import { XLSXButton, CSVButton, JSONButton } from './ExportButtons'
 
 const ErrorTable = props => {
 
-    const rowsPerPage = 5
+    const [rowsPerPage, setRowsPerPage] = useState(5)
     const [page, setPage] = useState(1)
     const { slice, range } = useTable(props.selectedTest.data, page, rowsPerPage)
 
@@ -123,10 +123,13 @@ const ErrorTable = props => {
 
             {!props.loading ? (
                 <TableFooter
+                    rowsPerPage={rowsPerPage}
+                    maxRows={props.selectedTest.data.length}
                     range={range}
                     slice={slice}
-                    setPage={setPage}
                     page={page}
+                    setPage={setPage}
+                    setRowsPerPage={setRowsPerPage}
                 />
             ) : null}
 
@@ -135,7 +138,7 @@ const ErrorTable = props => {
                     <div className="dot-flashing"></div>
                 </div>
             ) : props.selectedTest._id === '' ? (
-                <div className="d-flex flex-row justify-content-center my-4">
+                <div className="test-btns d-flex flex-row justify-content-center my-4">
                     <PushTest
                         className="pt-5"
                         user=""
@@ -145,7 +148,7 @@ const ErrorTable = props => {
                     <ClearTest className="pt-5" api={props.api} />
                 </div>
             ) : (
-                <div className="d-flex flex-row justify-content-center my-4">
+                <div className="test-btns d-flex flex-row justify-content-center my-4">
                     <XLSXButton selectedTest={props.selectedTest} api={props.api} />
                     <CSVButton selectedTest={props.selectedTest} api={props.api} />
                     <JSONButton selectedTest={props.selectedTest} api={props.api} />
