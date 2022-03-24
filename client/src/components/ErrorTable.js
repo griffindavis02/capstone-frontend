@@ -145,7 +145,7 @@ const ErrorTable = props => {
                         handler={props.handler}
                         api={props.api}
                     />
-                    <ClearTest className="pt-5" api={props.api} />
+                    <ClearTest className="pt-5" api={props.api} handler={props.handler} />
                 </div>
             ) : (
                 <div className="test-btns d-flex flex-row justify-content-center my-4">

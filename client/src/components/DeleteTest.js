@@ -64,6 +64,7 @@ const ClearTest = (props) => {
     const onSubmit = e => {
         axios.post(`${props.api}/api/clear`)
         setModalIsOpen(false)
+        props.handler()
     }
 
     return (
