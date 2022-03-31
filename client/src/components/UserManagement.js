@@ -29,7 +29,7 @@ const AddAdmin = (props) => {
             setSelectedUsers([...selectedUsers, e.target.id])
         } else {
             setSelectedUsers([...selectedUsers].filter(el => {
-                return el != e.target.id
+                return el !== e.target.id
             }))
         }
     }
@@ -102,9 +102,5 @@ const addUser = async (api, user) => {
     if (existingUser.data) update.admin = existingUser.data.admin
     axios.post(`${api}/user-management/add-update-user`, { update })
 }
-
-// const addAdmin = e => {
-
-// }
 
 export { addUser, AddAdmin }
