@@ -4,7 +4,7 @@ import './App.css';
 import NavBar from './components/NavBar'
 import ErrorTable from './components/ErrorTable'
 import SelectData from './components/SelectData'
-import { updateLogin } from './components/Login'
+import { addUser } from './components/UserManagement'
 import { withAuth0 } from '@auth0/auth0-react'
 
 class App extends Component {
@@ -37,7 +37,7 @@ class App extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth0
     if (isAuthenticated) {
-      updateLogin(this.state.api, user)
+      addUser(this.state.api, user)
     }
     return (
       <div className="App">

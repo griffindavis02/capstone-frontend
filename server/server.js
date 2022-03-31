@@ -9,7 +9,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/', require('./routes/apiRoutes'))
-app.use('/auth', require('./routes/loginRoutes'))
+app.use('/user-management', require('./routes/userManagement'))
 const dbo = require('./db/conn')
 
 app.listen(port, () => {

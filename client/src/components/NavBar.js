@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { useAuth0 } from '@auth0/auth0-react'
 import { LoginButton, LogoutButton } from './Login'
+import { AddAdmin } from './UserManagement'
 import logo from '../logo.png'
 
 const NavBar = (props) => {
@@ -22,15 +23,20 @@ const NavBar = (props) => {
                     </Nav>
                     <Nav>
                         {isAuthenticated
-                            ? <NavDropdown title={
-                                <img className="profile"
-                                    src={user.picture}
-                                    alt="profile picture"
-                                    style={{ maxHeight: "3rem", maxWidth: "3rem" }}
-                                />
-                            }>
-                                <NavDropdown.Item><LogoutButton /></NavDropdown.Item>
-                            </NavDropdown>
+                            ? <div className="d-flex flex-row align-items-center">
+                                <NavDropdown title={
+                                    <img className="profile"
+                                        src={user.picture}
+                                        alt="profile"
+                                        style={{ maxHeight: "3rem", maxWidth: "3rem" }}
+                                    />
+                                }>
+                                    <NavDropdown.Item>{user.nickname}</NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item><LogoutButton /></NavDropdown.Item>
+                                </NavDropdown>
+                                <AddAdmin api={props.api} user={user} />
+                            </div>
                             : <LoginButton />
                         }
                     </Nav>
