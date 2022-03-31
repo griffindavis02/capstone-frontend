@@ -4,7 +4,7 @@ import './App.css';
 import NavBar from './components/NavBar'
 import ErrorTable from './components/ErrorTable'
 import SelectData from './components/SelectData'
-import LoginButton from './components/Login'
+import { updateLogin } from './components/Login'
 import { withAuth0 } from '@auth0/auth0-react'
 
 class App extends Component {
@@ -35,11 +35,14 @@ class App extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props.auth0
+    const { isAuthenticated, user } = this.props.auth0
+    if (isAuthenticated) {
+      updateLogin(this.state.api, user)
+    }
     return (
       <div className="App">
         <Router>
-          <NavBar />
+          <NavBar api={this.state.api} />
           <Fragment>
             <Routes>
               <Route exact path="/" element={

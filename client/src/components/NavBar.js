@@ -1,12 +1,12 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { useAuth0 } from '@auth0/auth0-react'
 import { LoginButton, LogoutButton } from './Login'
 import logo from '../logo.png'
 
-const NavBar = () => {
-    const { isAuthenticated } = useAuth0()
+const NavBar = (props) => {
+    const { isAuthenticated, user } = useAuth0()
 
     return (
         <Navbar bg="light" expand="lg">
@@ -22,7 +22,15 @@ const NavBar = () => {
                     </Nav>
                     <Nav>
                         {isAuthenticated
-                            ? <LogoutButton />
+                            ? <NavDropdown title={
+                                <img className="profile"
+                                    src={user.picture}
+                                    alt="profile picture"
+                                    style={{ maxHeight: "3rem", maxWidth: "3rem" }}
+                                />
+                            }>
+                                <NavDropdown.Item><LogoutButton /></NavDropdown.Item>
+                            </NavDropdown>
                             : <LoginButton />
                         }
                     </Nav>
