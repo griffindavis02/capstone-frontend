@@ -2,9 +2,7 @@ const express = require('express')
 const router = express.Router()
 const ObjectId = require('mongodb').ObjectId
 const dbo = require('../db/conn')
-const crypto = require('crypto')
 const fileExport = require('../utils/fileExport')
-// const { requiresAuth } = require('express-openid-connect')
 let data = {
     Data: [],
 }
@@ -19,40 +17,6 @@ router.route('/').get((req, res) => {
     }
     res.send(`<p><a href='/login'>Login</a><a href='/logout'>Logout</a></p>
     <ul>${hrefs}</ul>`)
-})
-
-router.route('/auth-test').get(async (req, res) => {
-    let db_connect = dbo.getDb()
-    const user = {
-        user: req.oidc.user.nickname,
-        email: req.oidc.user.email,
-        last_login: req.oidc.user.updated_at,
-        hash: crypto
-            .createHash('sha256')
-            .update(req.oidc.user.email)
-            .digest('hex'),
-    }
-    if (
-        !(await db_connect
-            .collection('users')
-            .count({ hash: user.hash }, { limit: 1 }))
-    ) {
-        db_connect.collection('users').insertOne(user, (err, res) => {
-            if (err) throw err
-        })
-    } else if (
-        !(await db_connect
-            .collection('users')
-            .count({ hash: user.hash, last_login: user.last_login }))
-    ) {
-        db_connect
-            .collection('users')
-            .updateOne(
-                { hash: user.hash },
-                { $set: { last_login: req.oidc.user.updated_at } }
-            )
-    }
-    res.json({ user })
 })
 
 router.route('/api/iteration').post((req, res) => {
