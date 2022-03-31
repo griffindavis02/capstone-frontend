@@ -5,7 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 const LoginButton = () => {
     const { loginWithRedirect } = useAuth0()
     return (
-        <button className="btn btn-primary btn-lg mt-5"
+        <button className="btn btn-outline-dark"
             onClick={() => loginWithRedirect()}>
             Login
         </button>
@@ -15,12 +15,11 @@ const LoginButton = () => {
 const LogoutButton = () => {
     const { logout } = useAuth0()
     return (
-        <button className="btn btn-primary btn-lg mt-5"
+        <button className="btn btn-outline-dark"
             onClick={() => logout({ returnTo: window.location.origin })}>
             Logout
         </button>
     )
 }
 
-export default LoginButton
-export { LogoutButton }
+export { LoginButton, LogoutButton }

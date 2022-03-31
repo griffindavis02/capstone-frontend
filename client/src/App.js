@@ -67,7 +67,9 @@ class App extends Component {
                     } />
                     <ErrorTable api={this.state.api} loading={!this.state.selectedTest.data.length} selectedTest={this.state.selectedTest} handler={this.handlePushDelete} />
                   </div> :
-                  <LoginButton />}
+                  <div className="loading">
+                    <div className="dot-flashing"></div>
+                  </div>}
               />
             </Routes>
           </Fragment>
