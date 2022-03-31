@@ -23,27 +23,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.setState({
-    //   repeatFetch: setInterval(async () => {
-    //     const { isAuthenticated, getAccessTokenSilently } = this.props.auth0
-    //     if (isAuthenticated) {
-    //       try {
-    //         const accessToken = await getAccessTokenSilently({
-    //           audience: 'https://griffindavis02.us.auth0.com/api/v2/',
-    //           scope: 'read:current_user'
-    //         })
-
-    //         console.log(accessToken)
-    //       }
-    //       catch (e) {
-    //         console.log(e.message)
-    //       }
-    //     }
-
-    //     // console.log(user.name)
-    //   }, 5000)
-    // })
-
     this.getTests()
     this.callBackendAPI()
       .catch(err => console.log(err));
@@ -98,8 +77,8 @@ class App extends Component {
   }
 
   callBackendAPI = async () => {
-    // const { isAuthenticated } = this.props.auth0
-    // if (!isAuthenticated) return
+    const { isAuthenticated } = this.props.auth0
+    if (!isAuthenticated) return
     const response = await fetch(`${this.state.api}/api/current-test`)
     const body = await response.json()
 
@@ -121,8 +100,6 @@ class App extends Component {
   }
 
   getTests = async () => {
-    // const { isAuthenticated } = this.props.auth0
-    // if (!isAuthenticated) return
     const response = await fetch(`${this.state.api}/api/past-tests`)
     const body = await response.json()
 
