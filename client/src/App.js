@@ -6,6 +6,7 @@ import ErrorTable from './components/ErrorTable'
 import SelectData from './components/SelectData'
 import { addUser } from './components/UserManagement'
 import { withAuth0 } from '@auth0/auth0-react'
+import axios from 'axios'
 
 class App extends Component {
   state = {
@@ -84,8 +85,8 @@ class App extends Component {
   callBackendAPI = async () => {
     const { isAuthenticated } = this.props.auth0
     if (!isAuthenticated) return
-    const response = await fetch(`${this.state.api}/api/current-test`)
-    const body = await response.json()
+    const response = await axios.get(`${this.state.api}/api/current-test`)
+    const body = await response.data
 
     if (response.status !== 200) {
       throw Error(body.message)
@@ -105,8 +106,8 @@ class App extends Component {
   }
 
   getTests = async () => {
-    const response = await fetch(`${this.state.api}/api/past-tests`)
-    const body = await response.json()
+    const response = await axios.get(`${this.state.api}/api/past-tests`)
+    const body = response.data
 
     if (response.status !== 200) throw Error(body.message)
 
