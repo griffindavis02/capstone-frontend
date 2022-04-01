@@ -4,8 +4,10 @@ const cors = require('cors')
 require('dotenv').config({ path: './.env' })
 
 const port = process.env.PORT || 5000
+const webapp = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ?
+    'http://localhost:3000' : 'https://brrg-webapp.herokuapp.com'
 
-app.use(cors())
+app.use(cors({ origin: webapp }))
 app.use(express.json())
 
 app.use('/', require('./routes/apiRoutes'))
