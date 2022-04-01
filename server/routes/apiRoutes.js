@@ -71,7 +71,7 @@ router.route('/api/clear').post((req, res) => {
     }
 })
 
-router.route('/api/test:id').get((req, res) => {
+router.route('/api/test/:id').get((req, res) => {
     let db_connect = dbo.getDb()
     let query = { _id: ObjectId(req.params.id) }
 
