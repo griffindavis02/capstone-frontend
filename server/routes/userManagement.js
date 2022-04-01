@@ -3,6 +3,18 @@ const router = express.Router()
 const ObjectId = require('mongodb').ObjectId
 const dbo = require('../db/conn')
 
+router.route('/').get((req, res) => {
+    hrefs = ''
+    for (const route of router.stack) {
+        route.route.methods.get
+            ? (hrefs += `<li><a href=${route.route.path}>${route.route.path}</a></li>
+        `)
+            : null
+    }
+    res.send(`<p><a href='/login'>Login</a><a href='/logout'>Logout</a></p>
+    <ul>${hrefs}</ul>`)
+})
+
 router.route('/get-users').get((req, res) => {
     let db_connect = dbo.getDb()
     db_connect
