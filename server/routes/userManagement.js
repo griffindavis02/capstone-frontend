@@ -78,6 +78,4 @@ router.route('/add-admins').post((req, res) => {
         })
 })
 
-router.route('')
-
 module.exports = router
