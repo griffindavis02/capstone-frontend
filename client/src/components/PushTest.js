@@ -12,10 +12,10 @@ const PushTest = (props) => {
 
     const onSubmit = e => {
         e.preventDefault()
-
+        console.log('posting')
         axios.post(`${props.api}/api/commit`, {
             test_name: testName,
-            user: props.user,
+            email: props.email,
         })
             .then(res => console.log(res.data))
             .catch(err => console.error(err))

@@ -32,7 +32,10 @@ router.route('/get-user/:email').get((req, res) => {
 
     db_connect.collection('users').findOne(query, (err, result) => {
         if (err) throw err
-        res.json(result)
+        if (result == null) {
+            res.status(404)
+            res.send(`User not found: ${req.params.email}`)
+        } else res.json(result)
     })
 })
 
@@ -76,6 +79,7 @@ router.route('/add-update-user').post((req, res) => {
             }
         },
         { upsert: true })
+    res.send('User updated.')
 })
 
 router.route('/add-admins').post((req, res) => {
@@ -88,6 +92,7 @@ router.route('/add-admins').post((req, res) => {
                 admin: true
             }
         })
+    res.send('Admins added.')
 })
 
 module.exports = router

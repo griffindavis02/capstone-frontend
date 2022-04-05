@@ -1,11 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const axios = require('axios')
 const ObjectId = require('mongodb').ObjectId
 const dbo = require('../db/conn')
 const fileExport = require('../utils/fileExport')
-let data = {
-    Data: [],
-}
+const { clearTest } = require('../utils/dbHandlers')
 
 router.route('/').get((req, res) => {
     hrefs = ''
@@ -19,27 +18,72 @@ router.route('/').get((req, res) => {
     <ul>${hrefs}</ul>`)
 })
 
-router.route('/api/iteration').post((req, res) => {
-    const iteration = JSON.parse(req.query.params)
-
-    data.Data.push(iteration)
-    res.json(iteration)
-    res.status = 200
-})
-
-router.route('/api/commit').post((req, res) => {
+// TODO: include password check
+router.route('/api/iteration/:email').post((req, res) => {
     let db_connect = dbo.getDb()
-    const test = {
-        test_name: req.body.test_name,
-        user: req.body.user,
-        data: data.Data,
-    }
-    db_connect.collection('tests').insertOne(test, (err, res) => {
+    let query = { email: req.params.email }
+
+    db_connect.collection('users').findOne(query, (err, user) => {
         if (err) throw err
+
+        if (user == null) {
+            res.status(404)
+            res.send(`User not found: ${req.params.email}`)
+        } else if (user.admin) {
+            when = new Date()
+            when = `${when.toDateString()} ${when.toLocaleTimeString()}`
+            db_connect.collection('user-tests').updateOne(
+                { user_id: ObjectId(user._id) },
+                {
+                    $push: {
+                        data: req.body
+                    },
+                    $set: {
+                        user_id: ObjectId(user._id),
+                        when: when
+                    }
+                },
+                { upsert: true }
+            )
+            res.send(req.body)
+        }
+        else res.send('Not an admin')
     })
-    data.Data = []
-    res.json(test)
 })
+
+router.route('/api/commit').post((req, res, next) => {
+    console.log(req.body)
+    let db_connect = dbo.getDb()
+    db_connect.collection('user-tests').aggregate([
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'user_id',
+                foreignField: '_id',
+                as: 'user'
+            }
+        },
+        { $match: { "user.email": req.body.email } },
+        { $unset: "user" }
+    ]).next((err, result) => {
+        if (err) throw err
+        if (result !== null) {
+            const test = {
+                test_name: req.body.test_name,
+                user: req.body.email,
+                data: result.data,
+            }
+
+            db_connect.collection('tests').insertOne(test, (err, res) => {
+                if (err) throw err
+            })
+            res.write(`Test "${test.test_name}" pushed.`)
+        }
+    })
+    // clear test cache
+    req.params.email = req.body.email
+    next()
+}, clearTest)
 
 router.route('/api/past-tests').get((req, res) => {
     let db_connect = dbo.getDb()
@@ -52,10 +96,32 @@ router.route('/api/past-tests').get((req, res) => {
         })
 })
 
-router.route('/api/current-test').get((req, res) => {
-    res.json(data)
+// TODO: Make a post request to secure password when added
+router.route('/api/current-test/:email').get((req, res) => {
+    let db_connect = dbo.getDb()
+    db_connect.collection('user-tests').aggregate([
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'user_id',
+                foreignField: '_id',
+                as: 'user'
+            }
+        },
+        { $match: { "user.email": req.params.email } },
+        { $unset: "user" }
+    ]).next((err, result) => {
+        if (err) throw err
+        if (result !== null)
+            res.send(result.data)
+        else {
+            res.status(404)
+            res.send(`User not found: ${req.params.email}`)
+        }
+    })
 })
 
+// TODO: include password check
 router.route('/api/delete/:id').delete((req, res) => {
     let db_connect = dbo.getDb()
     let query = { _id: ObjectId(req.params.id) }
@@ -65,11 +131,8 @@ router.route('/api/delete/:id').delete((req, res) => {
     })
 })
 
-router.route('/api/clear').post((req, res) => {
-    data = {
-        Data: [],
-    }
-})
+// TODO: include password check
+router.route('/api/clear/:email').post(clearTest)
 
 router.route('/api/test/:id').get((req, res) => {
     let db_connect = dbo.getDb()

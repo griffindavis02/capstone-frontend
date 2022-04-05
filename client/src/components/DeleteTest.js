@@ -62,7 +62,7 @@ const ClearTest = (props) => {
     // TODO: Add security key via token or something to 
     // clear user tests
     const onSubmit = e => {
-        axios.post(`${props.api}/api/clear`)
+        axios.post(`${props.api}/api/clear/${props.email}`)
         setModalIsOpen(false)
         props.handler()
     }

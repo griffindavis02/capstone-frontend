@@ -19,15 +19,14 @@ class App extends Component {
       user: "",
       data: []
     },
-    currentData: [],
     repeatFetch: function () { }
   }
 
   componentDidMount() {
     this.getTests()
-    this.callBackendAPI()
+    this.callBackendAPI(false)
       .catch(err => console.log(err));
-    const repeatFetch = setInterval(this.callBackendAPI, 5000)
+    const repeatFetch = setInterval(() => this.callBackendAPI(false), 5000)
     this.setState({ repeatFetch: repeatFetch })
   }
 
@@ -62,14 +61,17 @@ class App extends Component {
                           }
                         }
                         if (!selectedTest._id) {
-                          selectedTest.data = this.state.currentData
+                          this.callBackendAPI(true)
+                        } else {
+                          clearInterval(this.state.repeatFetch)
+                          this.setState({
+                            selectedTest: selectedTest,
+                            repeatFetch: function () { }
+                          })
                         }
-                        this.setState({
-                          selectedTest: selectedTest,
-                        })
                       }
                     } />
-                    <ErrorTable api={this.state.api} loading={!this.state.selectedTest.data.length} selectedTest={this.state.selectedTest} handler={this.handlePushDelete} />
+                    <ErrorTable api={this.state.api} loading={!this.state.selectedTest.data.length} selectedTest={this.state.selectedTest} handler={this.handlePushDelete} email={user.email} />
                   </div> :
                   <div className="loading">
                     <div className="dot-flashing"></div>
@@ -82,24 +84,32 @@ class App extends Component {
     );
   }
 
-  callBackendAPI = async () => {
-    const { isAuthenticated } = this.props.auth0
+  callBackendAPI = async (refreshState) => {
+    const { isAuthenticated, user } = this.props.auth0
     if (!isAuthenticated) return
-    const response = await axios.get(`${this.state.api}/api/current-test`)
-    const body = await response.data
+    const response = await axios.get(`${this.state.api}/api/current-test/${encodeURIComponent(user.email)}`)
+    const body = response.data
 
     if (response.status !== 200) {
       throw Error(body.message)
     }
 
-    if (body.Data.length && this.state.selectedTest._id === "") {
-      const test = {
-        _id: "",
-        test_name: "",
-        user: "",
-        data: body.Data
-      }
-      this.setState({ currentData: body.Data, selectedTest: test })
+    const test = {
+      _id: "",
+      test_name: "",
+      user: user.nickname,
+      data: body
+    }
+    if (body.length && this.state.selectedTest._id === "") {
+      this.setState({ selectedTest: test })
+    }
+
+    if (refreshState) {
+      const repeatFetch = setInterval(() => this.callBackendAPI(false), 5000)
+      this.setState({
+        selectedTest: test,
+        repeatFetch: repeatFetch
+      })
     }
 
     return body
@@ -118,7 +128,6 @@ class App extends Component {
     await new Promise(r => setTimeout(r, 1000)) // wait 3 seconds for db update
     await this.getTests()
     this.setState({
-      currentData: [],
       selectedTest: {
         _id: "",
         test_name: "",

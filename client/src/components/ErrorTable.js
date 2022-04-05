@@ -141,11 +141,16 @@ const ErrorTable = props => {
                 <div className="test-btns d-flex flex-row justify-content-center my-4">
                     <PushTest
                         className="pt-5"
-                        user=""
+                        email={props.email}
                         handler={props.handler}
                         api={props.api}
                     />
-                    <ClearTest className="pt-5" api={props.api} handler={props.handler} />
+                    <ClearTest
+                        className="pt-5"
+                        api={props.api}
+                        email={props.email}
+                        handler={props.handler}
+                    />
                 </div>
             ) : (
                 <div className="test-btns d-flex flex-row justify-content-center my-4">
