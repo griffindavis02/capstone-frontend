@@ -62,5 +62,4 @@ need the collections `test`, `user-tests`, and `users`.
 
 We previously used Heroku but their free tier is being removed in October (?) so
 my best recommendation would be to use Firebase instead. The frontend should not
-be a huge concern presently so I'll work on this myself and update documentation
-as needed.
+be a huge concern presently.
