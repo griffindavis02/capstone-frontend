@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Modal, Form, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 
@@ -12,13 +12,13 @@ const PushTest = (props) => {
 
     const onSubmit = e => {
         e.preventDefault()
-
-        axios.post('/api/commit', {
+        console.log('posting')
+        axios.post(`${props.api}/api/commit`, {
             test_name: testName,
-            user: props.user,
+            email: props.email,
         })
-        .then(res => console.log(res.data))
-        .catch(err => console.error(err))
+            .then(res => console.log(res.data))
+            .catch(err => console.error(err))
 
         setTestName("")
         setModalIsOpen(false)
@@ -29,9 +29,9 @@ const PushTest = (props) => {
         <div>
             <button type="button" className="btn btn-primary" onClick={() => setModalIsOpen(true)}>Push Test</button>
             <Modal show={modalIsOpen} size="lg"
-            onHide={() => setModalIsOpen(false)}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered>
+                onHide={() => setModalIsOpen(false)}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">Push Test Data</Modal.Title>
                 </Modal.Header>
@@ -46,7 +46,7 @@ const PushTest = (props) => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button type="button" className="btn btn-secondary" onClick={()=>setModalIsOpen(false)}>Close</button>
+                    <button type="button" className="btn btn-secondary" onClick={() => setModalIsOpen(false)}>Close</button>
                     <button type="button" className="btn btn-primary" onClick={onSubmit}>Push Test</button>
                 </Modal.Footer>
             </Modal>

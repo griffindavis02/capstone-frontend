@@ -1,17 +1,17 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import useTable from './useTable'
-import TableFooter from './TableFooter.jsx'
+import TableFooter from './TableFooter'
 
-import PushTest from './PushTest.jsx'
-import DeleteTest from './DeleteTest.jsx'
-import CreateExcel from './CreateExcel.jsx'
+import PushTest from './PushTest'
+import { DeleteTest, ClearTest } from './DeleteTest'
+import { XLSXButton, CSVButton, JSONButton } from './ExportButtons'
 
 const ErrorTable = props => {
 
-  const rowsPerPage = 5
-  const [page, setPage] = useState(1)
-  const {slice, range} = useTable(props.selectedTest.data, page, rowsPerPage)
+    const [rowsPerPage, setRowsPerPage] = useState(5)
+    const [page, setPage] = useState(1)
+    const { slice, range } = useTable(props.selectedTest.data, page, rowsPerPage)
 
     return (
         <div className="container-lg mt-4">
@@ -90,43 +90,46 @@ const ErrorTable = props => {
                     </tr>
                     {!props.loading
                         ? slice.map((iteration, i) => (
-                              <tr key={i}>
-                                  <td>{iteration.Rate}</td>
-                                  <td>{iteration.IterationNum}</td>
-                                  <td>{iteration.ErrorData.PreviousValue}</td>
-                                  <td>
-                                      {highlightDiff(
-                                          iteration.ErrorData.PreviousByte,
-                                          iteration.ErrorData.ErrorByte
-                                      )}
-                                  </td>
-                                  <td>
-                                      {iteration.ErrorData.IntBits.map(
-                                          (bit) => `${bit}`
-                                      ).join(', ')}
-                                  </td>
-                                  <td>{iteration.ErrorData.ErrorValue}</td>
-                                  <td>
-                                      {highlightDiff(
-                                          iteration.ErrorData.ErrorByte,
-                                          iteration.ErrorData.PreviousByte
-                                      )}
-                                  </td>
-                                  <td>{iteration.ErrorData.DeltaValue}</td>
-                                  <td>{iteration.ErrorData.When}</td>
-                                  <td>{iteration.ErrorData.Msg}</td> 
-                              </tr>
-                          ))
+                            <tr key={i}>
+                                <td>{iteration.Rate}</td>
+                                <td>{iteration.IterationNum}</td>
+                                <td>{iteration.ErrorData.PreviousValue}</td>
+                                <td>
+                                    {highlightDiff(
+                                        iteration.ErrorData.PreviousByte,
+                                        iteration.ErrorData.ErrorByte
+                                    )}
+                                </td>
+                                <td>
+                                    {iteration.ErrorData.IntBits.map(
+                                        (bit) => `${bit}`
+                                    ).join(', ')}
+                                </td>
+                                <td>{iteration.ErrorData.ErrorValue}</td>
+                                <td>
+                                    {highlightDiff(
+                                        iteration.ErrorData.ErrorByte,
+                                        iteration.ErrorData.PreviousByte
+                                    )}
+                                </td>
+                                <td>{iteration.ErrorData.DeltaValue}</td>
+                                <td>{iteration.ErrorData.When}</td>
+                                <td>{iteration.ErrorData.Msg}</td>
+                            </tr>
+                        ))
                         : null}
                 </tbody>
             </table>
 
             {!props.loading ? (
                 <TableFooter
+                    rowsPerPage={rowsPerPage}
+                    maxRows={props.selectedTest.data.length}
                     range={range}
                     slice={slice}
-                    setPage={setPage}
                     page={page}
+                    setPage={setPage}
+                    setRowsPerPage={setRowsPerPage}
                 />
             ) : null}
 
@@ -135,19 +138,29 @@ const ErrorTable = props => {
                     <div className="dot-flashing"></div>
                 </div>
             ) : props.selectedTest._id === '' ? (
-                <div className="d-flex flex-row justify-content-center my-4">
+                <div className="test-btns d-flex flex-row justify-content-center my-4">
                     <PushTest
                         className="pt-5"
-                        user=""
+                        email={props.email}
+                        handler={props.handler}
+                        api={props.api}
+                    />
+                    <ClearTest
+                        className="pt-5"
+                        api={props.api}
+                        email={props.email}
                         handler={props.handler}
                     />
                 </div>
             ) : (
-                <div className="d-flex flex-row justify-content-center my-4">
-                    <CreateExcel selectedTest={props.selectedTest} />
+                <div className="test-btns d-flex flex-row justify-content-center my-4">
+                    <XLSXButton selectedTest={props.selectedTest} api={props.api} />
+                    <CSVButton selectedTest={props.selectedTest} api={props.api} />
+                    <JSONButton selectedTest={props.selectedTest} api={props.api} />
                     <DeleteTest
                         selectedTest={props.selectedTest}
                         handler={props.handler}
+                        api={props.api}
                     />
                 </div>
             )}
@@ -156,25 +169,25 @@ const ErrorTable = props => {
 }
 
 const highlightDiff = (hex1, hex2) => {
-      let i = 2
-      let indeces = []
-      let prev = i
-      while (i < hex1.length) {
+    let i = 2
+    let indeces = []
+    let prev = i
+    while (i < hex1.length) {
         if (hex1[i] !== hex2[i]) {
-          indeces.push({prev, i})
-          prev = i+1
+            indeces.push({ prev, i })
+            prev = i + 1
         }
         i++
-      }
-
-      return (
-        <span>0x{indeces.map( (index, i) => (
-          <span key={i}>
-            <span>{hex1.slice(index.prev,index.i)}</span>
-            <span className="diff-highlight">{hex1.slice(index.i, index.i+1)}</span>
-          </span>
-        ))}</span>
-      )
     }
+
+    return (
+        <span>0x{indeces.map((index, i) => (
+            <span key={i}>
+                <span>{hex1.slice(index.prev, index.i)}</span>
+                <span className="diff-highlight">{hex1.slice(index.i, index.i + 1)}</span>
+            </span>
+        ))}</span>
+    )
+}
 
 export default ErrorTable;
