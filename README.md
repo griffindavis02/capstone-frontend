@@ -36,10 +36,27 @@ Not as much information here either, just kind of need to read through the code.
 
 This is the actual frontend React webapp that gets deployed.
 
+Run `npm start` in development to launch the frontend and allow changes to
+refresh actively.
+
 ### server
 
 This is the `expressjs` API used by eth-bit-flip to push bit flip samples and
 the webapp to query each users' tests and what not.
+
+You can run `npm start` to launch the server or `npm run dev` to launch the
+server with `nodemon` (requires running `npm install -g nodemon`) and open it
+in the browser, allowing changes to refresh the server actively.
+
+First you will need to create a `.env` file in this directory with the
+structure:
+
+```shell
+ATLAS_URI=mongodb+srv://<username>:<password>@<database_name>.3wpgb.mongodb.net/?retryWrites=true&w=majority
+```
+
+You can use your own database or ask me for mine. If you start your own you will
+need the collections `test`, `user-tests`, and `users`.
 
 ## Deployment to Firebase
 
